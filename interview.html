@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Mock Interview - AI Resume Coach</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #a8c0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+        
+        .interview-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 30px;
+            padding: 30px;
+        }
+        
+        .industry-buttons {
+            display: flex;
+            gap: 12px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .industry-btn {
+            padding: 10px 20px;
+            background: #e0e0e0;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        
+        .industry-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .question-box {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px;
+            border-radius: 20px;
+            margin: 20px 0;
+        }
+        
+        .question-text {
+            font-size: 20px;
+            font-weight: 500;
+            color: #333;
+            line-height: 1.5;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            font-size: 14px;
+            font-family: inherit;
+            margin: 15px 0;
+            min-height: 120px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #ff9800;
+            color: white;
+        }
+        
+        .feedback {
+            margin-top: 20px;
+            padding: 20px;
+            background: #e8f5e9;
+            border-radius: 15px;
+            display: none;
+        }
+        
+        .question-list {
+            margin-top: 30px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .question-item {
+            background: white;
+            padding: 12px 15px;
+            margin: 8px 0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            border-left: 4px solid #667eea;
+        }
+        
+        .question-item:hover {
+            background: #f0f0f0;
+            transform: translateX(5px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <a href="index.html" class="logo">🤖 AI Resume Coach</a>
+            <div class="nav-links">
+                <a href="resume-checker.html">Resume</a>
+                <a href="interview.html">Text</a>
+                <a href="live-interview.html">Live</a>
+            </div>
+        </nav>
+        
+        <div class="interview-card">
+            <h1>💬 Text Mock Interview</h1>
+            <p>Type your answers and get detailed AI feedback</p>
+            
+            <div class="form-group">
+                <label>🔑 DeepSeek API Key</label>
+                <input type="password" id="apiKey" placeholder="Enter your DeepSeek API key" style="width:100%; padding:12px; border-radius:10px; border:2px solid #e0e0e0; margin-bottom:15px;">
+            </div>
+            
+            <div class="industry-buttons" id="industryButtons">
+                <button class="industry-btn active" onclick="selectIndustry('IT')">💻 IT</button>
+                <button class="industry-btn" onclick="selectIndustry('Banking')">🏦 Banking</button>
+                <button class="industry-btn" onclick="selectIndustry('Marketing')">📢 Marketing</button>
+                <button class="industry-btn" onclick="selectIndustry('Fresher')">🎓 Fresher</button>
+            </div>
+            
+            <div class="question-box">
+                <div class="question-text" id="questionText">Select an industry and click "Random Question"</div>
+            </div>
+            
+            <textarea id="answer" placeholder="Type your answer here..."></textarea>
+            
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="getRandomQuestion()">
+                    <i class="fas fa-random"></i> Random Question
+                </button>
+                <button class="btn btn-primary" onclick="submitAnswer()">
+                    <i class="fas fa-paper-plane"></i> Submit for Feedback
+                </button>
+            </div>
+            
+            <div class="feedback" id="feedback">
+                <h3><i class="fas fa-robot"></i> AI Feedback</h3>
+                <div id="feedbackText"></div>
+            </div>
+            
+            <div class="question-list" id="questionList">
+                <h3>📚 Question Bank</h3>
+                <div id="questionsList"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const questions = {
+            IT: [
+                "Tell me about yourself.",
+                "What is your favorite programming language and why?",
+                "Explain the difference between REST API and GraphQL.",
+                "How do you handle merge conflicts in Git?",
+                "Describe a challenging bug you fixed.",
+                "What is your approach to learning new technologies?",
+                "Explain OOP concepts with examples.",
+                "How do you ensure code quality?",
+                "Tell me about a project you're proud of.",
+                "Why do you want to work in IT?",
+                "What are your salary expectations?",
+                "Describe a time you worked in a team."
+            ],
+            Banking: [
+                "Why do you want to work in banking?",
+                "What is the current repo rate?",
+                "Explain the difference between NEFT and RTGS.",
+                "How do you handle customer complaints?",
+                "What are KYC norms?",
+                "Tell me about a time you handled pressure.",
+                "What is your understanding of risk management?",
+                "Why should we hire you?",
+                "Explain compound interest vs simple interest."
+            ],
+            Marketing: [
+                "What is your favorite marketing campaign and why?",
+                "Explain SEO and its importance.",
+                "How do you measure marketing ROI?",
+                "Tell me about a successful social media strategy.",
+                "What's the difference between B2B and B2C marketing?",
+                "How do you handle negative brand feedback?",
+                "Describe a time you increased engagement."
+            ],
+            Fresher: [
+                "Tell me about yourself.",
+                "What are your strengths and weaknesses?",
+                "Why should we hire you as a fresher?",
+                "Where do you see yourself in 5 years?",
+                "Tell me about your college projects.",
+                "Why did you choose this field?",
+                "How do you handle criticism?",
+                "Describe a leadership experience."
+            ]
+        };
+        
+        let currentIndustry = 'IT';
+        let currentQuestion = '';
+        
+        function selectIndustry(industry) {
+            currentIndustry = industry;
+            document.querySelectorAll('.industry-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            loadQuestionList();
+            getRandomQuestion();
+        }
+        
+        function loadQuestionList() {
+            const container = document.getElementById('questionsList');
+            container.innerHTML = '';
+            questions[currentIndustry].forEach((q, idx) => {
+                const div = document.createElement('div');
+                div.className = 'question-item';
+                div.innerHTML = `<strong>Q${idx+1}.</strong> ${q.substring(0, 80)}${q.length > 80 ? '...' : ''}`;
+                div.onclick = () => {
+                    currentQuestion = q;
+                    document.getElementById('questionText').innerHTML = q;
+                    document.getElementById('answer').value = '';
+                    document.getElementById('feedback').style.display = 'none';
+                };
+                container.appendChild(div);
+            });
+        }
+        
+        function getRandomQuestion() {
+            const industryQuestions = questions[currentIndustry];
+            const randomIndex = Math.floor(Math.random() * industryQuestions.length);
+            currentQuestion = industryQuestions[randomIndex];
+            document.getElementById('questionText').innerHTML = currentQuestion;
+            document.getElementById('answer').value = '';
+            document.getElementById('feedback').style.display = 'none';
+        }
+        
+        async function submitAnswer() {
+            const apiKey = document.getElementById('apiKey').value;
+            const answer = document.getElementById('answer').value;
+            
+            if (!apiKey) {
+                alert('Please enter your DeepSeek API key');
+                return;
+            }
+            if (!answer) {
+                alert('Please type your answer first');
+                return;
+            }
+            
+            document.getElementById('feedback').style.display = 'block';
+            document.getElementById('feedbackText').innerHTML = '<em>Analyzing your answer...</em>';
+            
+            try {
+                const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`
+                    },
+                    body: JSON.stringify({
+                        model: 'deepseek-chat',
+                        messages: [{
+                            role: 'system',
+                            content: `You are an experienced interviewer. Give feedback on the candidate's answer for ${currentIndustry} role. Include: Good points, Improvements, Sample answer (2 lines). Be encouraging.`
+                        }, {
+                            role: 'user',
+                            content: `Question: ${currentQuestion}\n\nAnswer: ${answer}`
+                        }]
+                    })
+                });
+                
+                const data = await response.json();
+                const feedback = data.choices[0].message.content;
+                document.getElementById('feedbackText').innerHTML = feedback.replace(/\n/g, '<br>');
+                
+            } catch(error) {
+                document.getElementById('feedbackText').innerHTML = 'Error getting feedback. Please check your API key.';
+            }
+        }
+        
+        // Load initial questions
+        loadQuestionList();
+        getRandomQuestion();
+    </script>
+</body>
+</html>

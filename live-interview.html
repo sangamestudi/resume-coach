@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Mock Interview - AI Resume Coach</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #a8c0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+        
+        .interview-container {
+            background: rgba(255,255,255,0.95);
+            border-radius: 30px;
+            padding: 30px;
+        }
+        
+        .live-badge {
+            display: inline-block;
+            background: #ff4444;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .question-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .question-text {
+            font-size: 28px;
+            line-height: 1.4;
+            margin-bottom: 20px;
+        }
+        
+        .mic-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .mic-btn {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .mic-btn.recording {
+            background: #ff4444;
+            animation: pulse 1s infinite;
+        }
+        
+        .mic-btn i {
+            font-size: 40px;
+            color: white;
+        }
+        
+        .answer-text {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            min-height: 100px;
+        }
+        
+        .feedback-card {
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .ctrl-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        
+        .ctrl-btn.primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .ctrl-btn.secondary {
+            background: #ff9800;
+            color: white;
+        }
+        
+        .industry-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .industry-btn {
+            padding: 10px 20px;
+            background: #e0e0e0;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .industry-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .question-text { font-size: 20px; }
+            .mic-btn { width: 70px; height: 70px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <a href="index.html" class="logo">🤖 AI Resume Coach</a>
+            <div class="nav-links">
+                <a href="resume-checker.html">Resume</a>
+                <a href="interview.html">Text</a>
+                <a href="live-interview.html">Live</a>
+            </div>
+        </nav>
+        
+        <div class="interview-container">
+            <h1>🔴 Live Mock Interview <span class="live-badge">LIVE</span></h1>
+            <p>Speak your answers naturally - AI will evaluate and give feedback</p>
+            
+            <div class="industry-selector">
+                <button class="industry-btn active" onclick="selectIndustry('IT')">💻 IT</button>
+                <button class="industry-btn" onclick="selectIndustry('Banking')">🏦 Banking</button>
+                <button class="industry-btn" onclick="selectIndustry('Marketing')">📢 Marketing</button>
+                <button class="industry-btn" onclick="selectIndustry('Fresher')">🎓 Fresher</button>
+            </div>
+            
+            <div class="question-card">
+                <div class="question-text" id="questionText">Click "Start Interview" to begin</div>
+            </div>
+            
+            <div class="mic-container">
+                <button class="mic-btn" id="micBtn" onclick="toggleRecording()">
+                    <i class="fas fa-microphone"></i>
+                </button>
+                <p id="micStatus" style="margin-top: 10px;">🎤 Click mic to speak your answer</p>
+            </div>
+            
+            <div class="answer-text" id="answerText">
+                Your answer will appear here...
+            </div>
+            
+            <div class="controls">
+                <button class="ctrl-btn primary" onclick="getNextQuestion()">
+                    <i class="fas fa-forward"></i> Next Question
+                </button>
+                <button class="ctrl-btn secondary" onclick="getFeedback()">
+                    <i class="fas fa-robot"></i> Get AI Feedback
+                </button>
+            </div>
+            
+            <div class="feedback-card" id="feedbackCard">
+                <h3><i class="fas fa-comment-dots"></i> AI Feedback</h3>
+                <p id="feedbackText"></p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const questions = {
+            IT: [
+                "Tell me about yourself and your technical background.",
+                "What is your favorite programming language and why?",
+                "Explain the difference between REST API and GraphQL.",
+                "How do you handle merge conflicts in Git?",
+                "Describe a challenging technical problem you solved.",
+                "What are your salary expectations?",
+                "Why do you want to work at our company?"
+            ],
+            Banking: [
+                "Tell me about your understanding of the banking sector.",
+                "What is the current repo rate and its significance?",
+                "How do you handle an angry customer?",
+                "Explain KYC norms to me.",
+                "Why do you want to work in banking?"
+            ],
+            Marketing: [
+                "Tell me about your favorite marketing campaign.",
+                "How do you measure marketing ROI?",
+                "What's your experience with social media marketing?",
+                "How would you promote our brand?",
+                "Explain SEO in simple terms."
+            ],
+            Fresher: [
+                "Tell me about yourself.",
+                "What are your greatest strengths?",
+                "Why should we hire you as a fresher?",
+                "Where do you see yourself in 5 years?",
+                "Tell me about your college project."
+            ]
+        };
+        
+        let currentIndustry = 'IT';
+        let currentQuestion = '';
+        let mediaRecorder;
+        let audioChunks = [];
+        let isRecording = false;
+        let apiKey = ''; // User will need to enter their API key
+        
+        // Ask for API key on load
+        window.onload = () => {
+            apiKey = prompt('Enter your DeepSeek API key to start:', '');
+            if (!apiKey) {
+                alert('API key required! Get free from platform.deepseek.com');
+            } else {
+                getNextQuestion();
+            }
+        };
+        
+        function selectIndustry(industry) {
+            currentIndustry = industry;
+            document.querySelectorAll('.industry-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            getNextQuestion();
+        }
+        
+        function getNextQuestion() {
+            const industryQuestions = questions[currentIndustry];
+            const randomIndex = Math.floor(Math.random() * industryQuestions.length);
+            currentQuestion = industryQuestions[randomIndex];
+            document.getElementById('questionText').textContent = currentQuestion;
+            document.getElementById('answerText').innerHTML = 'Your answer will appear here...';
+            document.getElementById('feedbackCard').style.display = 'none';
+        }
+        
+        async function toggleRecording() {
+            if (!isRecording) {
+                startRecording();
+            } else {
+                stopRecording();
+            }
+        }
+        
+        async function startRecording() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                audioChunks = [];
+                
+                mediaRecorder.ondataavailable = event => {
+                    audioChunks.push(event.data);
+                };
+                
+                mediaRecorder.onstop = async () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                    await transcribeAudio(audioBlob);
+                };
+                
+                mediaRecorder.start();
+                isRecording = true;
+                document.getElementById('micBtn').classList.add('recording');
+                document.getElementById('micStatus').innerHTML = '🔴 Recording... Click mic to stop';
+                
+            } catch(error) {
+                alert('Microphone access denied. Please allow microphone access.');
+            }
+        }
+        
+        function stopRecording() {
+            if (mediaRecorder && isRecording) {
+                mediaRecorder.stop();
+                mediaRecorder.stream.getTracks().forEach(track => track.stop());
+                isRecording = false;
+                document.getElementById('micBtn').classList.remove('recording');
+                document.getElementById('micStatus').innerHTML = '✅ Recording stopped! Getting transcription...';
+            }
+        }
+        
+        async function transcribeAudio(audioBlob) {
+            // Note: For production, use a proper speech-to-text API
+            // This is a simplified version using Web Speech API
+            document.getElementById('answerText').innerHTML = 'Transcribing your answer...';
+            
+            // Use Web Speech API for demo (works in Chrome)
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'en-US';
+            recognition.start();
+            
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                document.getElementById('answerText').innerHTML = transcript;
+                document.getElementById('micStatus').innerHTML = '✅ Answer recorded! Click "Get AI Feedback"';
+            };
+            
+            recognition.onerror = () => {
+                document.getElementById('answerText').innerHTML = 'Could not transcribe. Please type your answer or try again.';
+                document.getElementById('micStatus').innerHTML = '🎤 Click mic to try again';
+            };
+        }
+        
+        async function getFeedback() {
+            const userAnswer = document.getElementById('answerText').innerHTML;
+            if (userAnswer === 'Your answer will appear here...' || userAnswer.includes('transcribing')) {
+                alert('Please speak your answer first!');
+                return;
+            }
+            
+            document.getElementById('feedbackCard').style.display = 'block';
+            document.getElementById('feedbackText').innerHTML = '🤔 Analyzing your answer...';
+            
+            try {
+                const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`
+                    },
+                    body: JSON.stringify({
+                        model: 'deepseek-chat',
+                        messages: [{
+                            role: 'system',
+                            content: `You are an interviewer for ${currentIndustry} role. Give feedback on the answer. Include: Good points, Improvements needed, Sample answer (2-3 lines). Keep encouraging.`
+                        }, {
+                            role: 'user',
+                            content: `Question: ${currentQuestion}\n\nAnswer: ${userAnswer}`
+                        }]
+                    })
+                });
+                
+                const data = await response.json();
+                const feedback = data.choices[0].message.content;
+                document.getElementById('feedbackText').innerHTML = feedback.replace(/\n/g, '<br>');
+                
+            } catch(error) {
+                document.getElementById('feedbackText').innerHTML = 'Error getting feedback. Please check your API key.';
+            }
+        }
+    </script>
+</body>
+</html>
