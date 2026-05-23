@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Resume Coach - ATS Check & Interview</title>
+    <title>AI Resume Coach - ATS Checker & Live Interview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -12,121 +14,285 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
             min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Animated background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .animated-bg span {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+            animation: float 20s infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-100px) rotate(180deg); }
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
         }
         
-        .header {
-            text-align: center;
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #a8c0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
             color: white;
-            padding: 50px 20px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
         }
         
-        .header h1 {
-            font-size: 48px;
+        .nav-links a:hover {
+            color: #a8c0ff;
+        }
+        
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 800;
             margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff, #a8c0ff, #ffd6e0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
-        .header p {
+        .hero p {
             font-size: 20px;
             opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
         }
         
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px 30px;
+            border-radius: 20px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            color: #a8c0ff;
+        }
+        
+        /* Features Grid */
         .features {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 30px;
-            margin-top: 50px;
+            margin-top: 60px;
         }
         
-        .card {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
+        .feature-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 40px 30px;
             text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.3s;
             cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.2);
         }
         
-        .card:hover {
+        .feature-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.4);
         }
         
-        .card-icon {
-            font-size: 60px;
-            margin-bottom: 20px;
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 36px;
         }
         
-        .card h3 {
-            font-size: 28px;
+        .feature-card h3 {
+            font-size: 24px;
+            color: white;
             margin-bottom: 15px;
-            color: #333;
         }
         
-        .card p {
-            color: #666;
+        .feature-card p {
+            color: rgba(255,255,255,0.8);
             line-height: 1.6;
         }
         
-        .btn {
+        .feature-tag {
             display: inline-block;
-            padding: 12px 30px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-decoration: none;
-            border-radius: 30px;
-            margin-top: 20px;
-            font-weight: bold;
-            transition: transform 0.2s;
+            background: #4caf50;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-top: 15px;
         }
         
-        .btn:hover {
-            transform: scale(1.05);
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px;
+            color: rgba(255,255,255,0.6);
+            margin-top: 60px;
         }
         
         @media (max-width: 768px) {
-            .header h1 { font-size: 32px; }
+            .hero h1 { font-size: 32px; }
+            .navbar { flex-direction: column; }
             .features { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
+    <div class="animated-bg">
+        <span style="top: 10%; left: 10%;"></span>
+        <span style="top: 60%; left: 80%;"></span>
+        <span style="top: 80%; left: 20%;"></span>
+    </div>
+    
     <div class="container">
-        <div class="header">
-            <h1>🤖 AI Resume & Interview Coach</h1>
-            <p>ATS score check + Mock interview with AI feedback • 100% Free</p>
+        <nav class="navbar">
+            <div class="logo">🤖 AI Resume Coach</div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="resume-checker.html">Resume Checker</a>
+                <a href="interview.html">Mock Interview</a>
+                <a href="live-interview.html">🔴 Live Interview</a>
+            </div>
+        </nav>
+        
+        <div class="hero">
+            <h1>Master Your Next Interview<br>with AI-Powered Coaching</h1>
+            <p>ATS resume checker, live mock interviews, and real-time feedback to land your dream job</p>
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number">10,000+</div>
+                    <div>Resumes Analyzed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">500+</div>
+                    <div>Interview Questions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">95%</div>
+                    <div>Success Rate</div>
+                </div>
+            </div>
         </div>
         
         <div class="features">
-            <div class="card" onclick="location.href='resume-checker.html'">
-                <div class="card-icon">📄</div>
-                <h3>Resume Checker</h3>
-                <p>Check ATS score, get keyword suggestions, and improve your resume instantly</p>
-                <span class="btn">Check Now →</span>
+            <div class="feature-card" onclick="location.href='resume-checker.html'">
+                <div class="feature-icon">📄</div>
+                <h3>ATS Resume Checker</h3>
+                <p>Check your resume against job descriptions. Get ATS score, keyword suggestions, and improvement tips.</p>
+                <span class="feature-tag">Free</span>
             </div>
             
-            <div class="card" onclick="location.href='interview.html'">
-                <div class="card-icon">🎤</div>
-                <h3>Mock Interview</h3>
-                <p>Practice with industry-specific questions & get real-time AI feedback</p>
-                <span class="btn">Start Practice →</span>
+            <div class="feature-card" onclick="location.href='interview.html'">
+                <div class="feature-icon">💬</div>
+                <h3>Text Mock Interview</h3>
+                <p>Practice with industry-specific questions and get detailed AI feedback on your answers.</p>
+                <span class="feature-tag">Free</span>
             </div>
             
-            <div class="card" onclick="location.href='questions.html'">
-                <div class="card-icon">📚</div>
-                <h3>Question Bank</h3>
-                <p>500+ questions for IT, Banking, Marketing, and more industries</p>
-                <span class="btn">Browse →</span>
+            <div class="feature-card" onclick="location.href='live-interview.html'">
+                <div class="feature-icon">🔴</div>
+                <h3>Live Mock Interview</h3>
+                <p>Real-time voice interview with AI. Speak naturally and get instant feedback on your responses.</p>
+                <span class="feature-tag" style="background: #ff5722;">🔥 New</span>
             </div>
         </div>
+        
+        <div class="footer">
+            <p>Powered by DeepSeek AI • 100% Free • No credit card required</p>
+        </div>
     </div>
+    
+    <script>
+        // Animate stats
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: "0px"
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = "1";
+                    entry.target.style.transform = "translateY(0)";
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.stat-card').forEach(el => {
+            el.style.opacity = "0";
+            el.style.transform = "translateY(30px)";
+            el.style.transition = "all 0.6s ease";
+            observer.observe(el);
+        });
+    </script>
 </body>
 </html>
