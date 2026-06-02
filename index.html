@@ -2,8 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>AI Resume Coach - ATS Checker & Live Interview</title>
+    
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AI Resume Coach">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/Resume-coach/sw.js')
+                    .then(registration => {
+                        console.log('Service Worker registered successfully:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -191,6 +218,10 @@
             margin-top: 15px;
         }
         
+        .feature-tag.new {
+            background: #ff5722;
+        }
+        
         /* Footer */
         .footer {
             text-align: center;
@@ -199,10 +230,39 @@
             margin-top: 60px;
         }
         
+        /* Install Prompt */
+        .install-prompt {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            display: none;
+            align-items: center;
+            gap: 15px;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        
+        .install-prompt button {
+            background: #667eea;
+            border: none;
+            color: white;
+            padding: 6px 15px;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+        
         @media (max-width: 768px) {
             .hero h1 { font-size: 32px; }
             .navbar { flex-direction: column; }
             .features { grid-template-columns: 1fr; }
+            .stats { gap: 15px; }
+            .stat-card { padding: 12px 20px; }
+            .stat-number { font-size: 24px; }
         }
     </style>
 </head>
@@ -211,6 +271,8 @@
         <span style="top: 10%; left: 10%;"></span>
         <span style="top: 60%; left: 80%;"></span>
         <span style="top: 80%; left: 20%;"></span>
+        <span style="top: 30%; left: 50%;"></span>
+        <span style="top: 70%; left: 40%;"></span>
     </div>
     
     <div class="container">
@@ -229,16 +291,16 @@
             <p>ATS resume checker, live mock interviews, and real-time feedback to land your dream job</p>
             <div class="stats">
                 <div class="stat-card">
-                    <div class="stat-number">10,000+</div>
-                    <div>Resumes Analyzed</div>
-                </div>
-                <div class="stat-card">
                     <div class="stat-number">500+</div>
                     <div>Interview Questions</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">95%</div>
                     <div>Success Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24/7</div>
+                    <div>AI Support</div>
                 </div>
             </div>
         </div>
@@ -262,17 +324,27 @@
                 <div class="feature-icon">🔴</div>
                 <h3>Live Mock Interview</h3>
                 <p>Real-time voice interview with AI. Speak naturally and get instant feedback on your responses.</p>
-                <span class="feature-tag" style="background: #ff5722;">🔥 New</span>
+                <span class="feature-tag new">🔥 New</span>
             </div>
         </div>
         
         <div class="footer">
             <p>Powered by DeepSeek AI • 100% Free • No credit card required</p>
+            <p style="margin-top: 10px; font-size: 12px;">
+                <a href="privacy.html" style="color: rgba(255,255,255,0.6);">Privacy Policy</a> | 
+                <a href="terms.html" style="color: rgba(255,255,255,0.6);">Terms of Service</a>
+            </p>
         </div>
     </div>
     
+    <div class="install-prompt" id="installPrompt">
+        <span>📱 Install AI Resume Coach on your device</span>
+        <button id="installBtn">Install</button>
+        <button onclick="closeInstall()">✕</button>
+    </div>
+    
     <script>
-        // Animate stats
+        // Animate stats on scroll
         const observerOptions = {
             threshold: 0.5,
             rootMargin: "0px"
@@ -293,6 +365,29 @@
             el.style.transition = "all 0.6s ease";
             observer.observe(el);
         });
+        
+        // PWA Install Prompt
+        let deferredPrompt;
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('installPrompt').style.display = 'flex';
+        });
+        
+        document.getElementById('installBtn').addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`User response: ${outcome}`);
+                deferredPrompt = null;
+                document.getElementById('installPrompt').style.display = 'none';
+            }
+        });
+        
+        function closeInstall() {
+            document.getElementById('installPrompt').style.display = 'none';
+        }
     </script>
 </body>
 </html>
