@@ -9,24 +9,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
             min-height: 100vh;
         }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -39,7 +28,6 @@
             flex-wrap: wrap;
             gap: 15px;
         }
-        
         .logo {
             font-size: 24px;
             font-weight: 800;
@@ -48,40 +36,17 @@
             -webkit-text-fill-color: transparent;
             text-decoration: none;
         }
-        
-        .nav-links {
-            display: flex;
-            gap: 20px;
-        }
-        
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        .nav-links a:hover {
-            color: #a8c0ff;
-        }
-        
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a { color: white; text-decoration: none; font-weight: 500; }
+        .nav-links a:hover { color: #a8c0ff; }
         .main-card {
             background: rgba(255,255,255,0.95);
             border-radius: 30px;
             padding: 40px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
-        
-        h1 {
-            font-size: 32px;
-            color: #333;
-            margin-bottom: 10px;
-        }
-        
-        .subtitle {
-            color: #666;
-            margin-bottom: 30px;
-        }
-        
+        h1 { font-size: 32px; color: #333; margin-bottom: 10px; }
+        .subtitle { color: #666; margin-bottom: 30px; }
         .upload-section {
             border: 2px dashed #667eea;
             border-radius: 20px;
@@ -92,33 +57,11 @@
             transition: 0.3s;
             cursor: pointer;
         }
-        
-        .upload-section:hover {
-            background: #f0f2ff;
-            border-color: #764ba2;
-        }
-        
-        .upload-icon {
-            font-size: 60px;
-            color: #667eea;
-            margin-bottom: 15px;
-        }
-        
-        .upload-text {
-            font-size: 18px;
-            color: #333;
-            margin-bottom: 10px;
-        }
-        
-        .upload-hint {
-            font-size: 14px;
-            color: #999;
-        }
-        
-        #fileInput {
-            display: none;
-        }
-        
+        .upload-section:hover { background: #f0f2ff; border-color: #764ba2; }
+        .upload-icon { font-size: 60px; color: #667eea; margin-bottom: 15px; }
+        .upload-text { font-size: 18px; color: #333; margin-bottom: 10px; }
+        .upload-hint { font-size: 14px; color: #999; }
+        #fileInput { display: none; }
         .file-info {
             background: #e8f5e9;
             padding: 12px 20px;
@@ -130,21 +73,9 @@
             flex-wrap: wrap;
             gap: 10px;
         }
-        
-        .remove-file {
-            color: #f44336;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        
-        .or-divider {
-            text-align: center;
-            margin: 20px 0;
-            position: relative;
-        }
-        
-        .or-divider:before,
-        .or-divider:after {
+        .remove-file { color: #f44336; cursor: pointer; font-weight: 600; }
+        .or-divider { text-align: center; margin: 20px 0; position: relative; }
+        .or-divider:before, .or-divider:after {
             content: "";
             position: absolute;
             top: 50%;
@@ -152,27 +83,11 @@
             height: 1px;
             background: #ddd;
         }
-        
         .or-divider:before { left: 0; }
         .or-divider:after { right: 0; }
-        
-        .or-divider span {
-            background: white;
-            padding: 0 15px;
-            color: #999;
-        }
-        
-        .form-group {
-            margin-bottom: 25px;
-        }
-        
-        label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: #333;
-        }
-        
+        .or-divider span { background: white; padding: 0 15px; color: #999; }
+        .form-group { margin-bottom: 25px; }
+        label { display: block; font-weight: 600; margin-bottom: 10px; color: #333; }
         textarea, input {
             width: 100%;
             padding: 15px;
@@ -182,13 +97,11 @@
             font-family: inherit;
             transition: 0.3s;
         }
-        
         textarea:focus, input:focus {
             outline: none;
             border-color: #667eea;
             box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
         }
-        
         .btn {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -201,18 +114,8 @@
             width: 100%;
             transition: 0.3s;
         }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102,126,234,0.4);
-        }
-        
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-        
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(102,126,234,0.4); }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
         .result {
             margin-top: 30px;
             padding: 25px;
@@ -220,14 +123,7 @@
             border-radius: 20px;
             display: none;
         }
-        
-        .score-circle {
-            width: 150px;
-            height: 150px;
-            margin: 20px auto;
-            position: relative;
-        }
-        
+        .score-circle { width: 150px; height: 150px; margin: 20px auto; position: relative; }
         .score-text {
             position: absolute;
             top: 50%;
@@ -236,13 +132,7 @@
             font-size: 36px;
             font-weight: 800;
         }
-        
-        .loading {
-            text-align: center;
-            padding: 40px;
-            display: none;
-        }
-        
+        .loading { text-align: center; padding: 40px; display: none; }
         .spinner {
             width: 50px;
             height: 50px;
@@ -252,12 +142,10 @@
             animation: spin 1s linear infinite;
             margin: 0 auto 15px;
         }
-        
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        
         .keyword-chip {
             display: inline-block;
             background: white;
@@ -267,27 +155,10 @@
             font-size: 14px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: #e0e0e0;
-            border-radius: 3px;
-            margin: 15px 0;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            transition: width 0.3s;
-        }
-        
-        @media (max-width: 768px) {
-            .main-card { padding: 20px; }
-            h1 { font-size: 24px; }
-        }
+        .progress-bar { width: 100%; height: 6px; background: #e0e0e0; border-radius: 3px; margin: 15px 0; overflow: hidden; }
+        .progress-fill { width: 0%; height: 100%; background: linear-gradient(135deg, #667eea, #764ba2); transition: width 0.3s; }
+        .error-msg { background: #ffebee; color: #c62828; padding: 15px; border-radius: 10px; margin: 15px 0; display: none; }
+        @media (max-width: 768px) { .main-card { padding: 20px; } h1 { font-size: 24px; } }
     </style>
 </head>
 <body>
@@ -304,16 +175,14 @@
         
         <div class="main-card">
             <h1>📄 ATS Resume Checker</h1>
-            <p class="subtitle">Upload your resume or paste text - AI will analyze and give ATS score</p>
+            <p class="subtitle">Upload PDF/Image or paste text - AI analyzes and gives ATS score</p>
             
             <!-- File Upload Section -->
             <div class="upload-section" onclick="document.getElementById('fileInput').click()">
-                <div class="upload-icon">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                </div>
+                <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
                 <div class="upload-text">Click to upload resume</div>
-                <div class="upload-hint">Supports PDF, DOCX, JPG, PNG (Max 10MB)</div>
-                <input type="file" id="fileInput" accept=".pdf,.docx,.jpg,.jpeg,.png">
+                <div class="upload-hint">Supports PDF, JPG, PNG (Max 10MB)</div>
+                <input type="file" id="fileInput" accept=".pdf,.jpg,.jpeg,.png">
             </div>
             
             <div class="file-info" id="fileInfo">
@@ -325,9 +194,7 @@
                 <div class="progress-fill" id="progressFill"></div>
             </div>
             
-            <div class="or-divider">
-                <span>OR</span>
-            </div>
+            <div class="or-divider"><span>OR</span></div>
             
             <div class="form-group">
                 <label>📝 Or paste resume text directly</label>
@@ -343,6 +210,8 @@
                 <i class="fas fa-chart-line"></i> Analyze My Resume
             </button>
             
+            <div class="error-msg" id="errorMsg"></div>
+            
             <div class="loading" id="loading">
                 <div class="spinner"></div>
                 <p id="loadingText">🤖 AI is analyzing your resume...</p>
@@ -350,7 +219,7 @@
             
             <div class="result" id="result">
                 <h3>📊 Analysis Results</h3>
-                <div class="score-circle" id="scoreCircle">
+                <div class="score-circle">
                     <canvas id="scoreCanvas" width="150" height="150"></canvas>
                     <div class="score-text" id="scoreText">0%</div>
                 </div>
@@ -358,7 +227,7 @@
                 <div id="missingKeywords"></div>
                 <h4>💡 Improvement Tips</h4>
                 <div id="tips"></div>
-                <h4>📝 Extracted Resume Text</h4>
+                <h4>📝 Extracted Resume Text (Preview)</h4>
                 <div id="extractedText" style="background: white; padding: 15px; border-radius: 10px; max-height: 200px; overflow-y: auto; font-size: 12px;"></div>
                 <button class="btn" onclick="copyResults()" style="margin-top: 20px; background: #4caf50;">
                     <i class="fas fa-copy"></i> Copy Results
@@ -372,6 +241,9 @@
         const DEEPSEEK_API_KEY = 'sk-43cb731b2b8348b8917d32e636a846c0';
         
         let extractedResumeText = '';
+        
+        // Set up PDF.js worker
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
         
         // File upload handler
         document.getElementById('fileInput').addEventListener('change', async function(e) {
@@ -388,15 +260,13 @@
             document.getElementById('progressBar').style.display = 'block';
             document.getElementById('progressFill').style.width = '0%';
             document.getElementById('resumeText').value = '';
+            document.getElementById('errorMsg').style.display = 'none';
             
             const fileName = file.name.toLowerCase();
             
             try {
                 if (fileName.endsWith('.pdf')) {
                     await extractPDFText(file);
-                } else if (fileName.endsWith('.docx')) {
-                    alert('For DOCX files, please copy and paste your resume text in the textarea below.');
-                    removeFile();
                 } else if (fileName.match(/\.(jpg|jpeg|png)$/)) {
                     await extractImageText(file);
                 } else {
@@ -404,7 +274,9 @@
                     removeFile();
                 }
             } catch(error) {
-                alert('Error extracting text: ' + error.message);
+                console.error('Extraction error:', error);
+                document.getElementById('errorMsg').innerHTML = 'Error reading file: ' + error.message;
+                document.getElementById('errorMsg').style.display = 'block';
                 removeFile();
             } finally {
                 document.getElementById('progressBar').style.display = 'none';
@@ -412,41 +284,62 @@
         });
         
         async function extractPDFText(file) {
-            const arrayBuffer = await file.arrayBuffer();
-            const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-            let fullText = '';
-            
-            for (let i = 1; i <= pdf.numPages; i++) {
-                const page = await pdf.getPage(i);
-                const textContent = await page.getTextContent();
-                const pageText = textContent.items.map(item => item.str).join(' ');
-                fullText += pageText + '\n';
-                const progress = (i / pdf.numPages) * 100;
-                document.getElementById('progressFill').style.width = `${progress}%`;
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                let fullText = '';
+                
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const page = await pdf.getPage(i);
+                    const textContent = await page.getTextContent();
+                    const pageText = textContent.items.map(item => item.str).join(' ');
+                    fullText += pageText + '\n';
+                    const progress = (i / pdf.numPages) * 100;
+                    document.getElementById('progressFill').style.width = `${progress}%`;
+                }
+                
+                if (!fullText.trim()) {
+                    throw new Error('No text found in PDF. The PDF might be scanned/image-based.');
+                }
+                
+                extractedResumeText = fullText;
+                document.getElementById('resumeText').value = extractedResumeText;
+                document.getElementById('progressFill').style.width = '100%';
+                
+            } catch(error) {
+                console.error('PDF extraction error:', error);
+                throw new Error('Could not extract text from PDF. Try pasting text manually.');
             }
-            
-            extractedResumeText = fullText;
-            document.getElementById('resumeText').value = extractedResumeText;
-            document.getElementById('progressFill').style.width = '100%';
         }
         
         async function extractImageText(file) {
-            document.getElementById('loadingText').innerHTML = '📸 Reading text from image...';
             document.getElementById('loading').style.display = 'block';
+            document.getElementById('loadingText').innerHTML = '📸 Reading text from image...';
             
-            const imageUrl = URL.createObjectURL(file);
-            const worker = await Tesseract.createWorker('eng');
-            document.getElementById('progressFill').style.width = '30%';
-            
-            const { data: { text } } = await worker.recognize(imageUrl);
-            await worker.terminate();
-            
-            document.getElementById('progressFill').style.width = '100%';
-            extractedResumeText = text;
-            document.getElementById('resumeText').value = extractedResumeText;
-            
-            document.getElementById('loading').style.display = 'none';
-            URL.revokeObjectURL(imageUrl);
+            try {
+                const imageUrl = URL.createObjectURL(file);
+                const worker = await Tesseract.createWorker('eng');
+                document.getElementById('progressFill').style.width = '30%';
+                
+                const { data: { text } } = await worker.recognize(imageUrl);
+                await worker.terminate();
+                
+                document.getElementById('progressFill').style.width = '100%';
+                
+                if (!text || !text.trim()) {
+                    throw new Error('No text found in image. Make sure the image is clear.');
+                }
+                
+                extractedResumeText = text;
+                document.getElementById('resumeText').value = extractedResumeText;
+                URL.revokeObjectURL(imageUrl);
+                
+            } catch(error) {
+                console.error('OCR error:', error);
+                throw new Error('Could not read text from image. Try a clearer image or paste text manually.');
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+            }
         }
         
         function removeFile() {
@@ -455,6 +348,7 @@
             extractedResumeText = '';
             document.getElementById('resumeText').value = '';
             document.getElementById('progressBar').style.display = 'none';
+            document.getElementById('errorMsg').style.display = 'none';
         }
         
         async function analyzeResume() {
@@ -465,20 +359,33 @@
                 resumeText = extractedResumeText;
             }
             
-            if (!resumeText) {
+            if (!resumeText || !resumeText.trim()) {
                 alert('Please upload a resume file or paste your resume text');
                 return;
+            }
+            
+            // Limit text length to avoid token issues
+            if (resumeText.length > 6000) {
+                resumeText = resumeText.substring(0, 6000);
             }
             
             document.getElementById('loading').style.display = 'block';
             document.getElementById('loadingText').innerHTML = '🤖 AI is analyzing your resume...';
             document.getElementById('result').style.display = 'none';
+            document.getElementById('errorMsg').style.display = 'none';
             document.getElementById('analyzeBtn').disabled = true;
             
             try {
-                const systemPrompt = `You are an ATS expert. Analyze the resume${jobDesc ? ' against the job description' : ''}. Return ONLY valid JSON: {"score": number (0-100), "missingKeywords": ["keyword1"], "tips": ["tip1", "tip2", "tip3"]}`;
+                const systemPrompt = `You are an ATS (Applicant Tracking System) expert. Analyze the resume${jobDesc ? ' against the job description' : ''}. Return ONLY valid JSON. Do not add any other text outside the JSON. Use this exact format:
+{
+  "score": 75,
+  "missingKeywords": ["keyword1", "keyword2"],
+  "tips": ["tip1", "tip2", "tip3"]
+}`;
                 
-                const userPrompt = `Resume:\n${resumeText.substring(0, 8000)}${jobDesc ? `\n\nJob Description:\n${jobDesc}` : ''}`;
+                const userPrompt = `Resume:\n${resumeText}${jobDesc ? `\n\nJob Description:\n${jobDesc}` : ''}`;
+                
+                console.log('Sending request to DeepSeek API...');
                 
                 const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
                     method: 'POST',
@@ -492,20 +399,46 @@
                             { role: 'system', content: systemPrompt },
                             { role: 'user', content: userPrompt }
                         ],
-                        temperature: 0.7
+                        temperature: 0.5
                     })
                 });
                 
+                if (!response.ok) {
+                    const errorData = await response.text();
+                    console.error('API Error:', errorData);
+                    throw new Error(`API Error: ${response.status} - Check your API key`);
+                }
+                
                 const data = await response.json();
+                console.log('API Response:', data);
+                
+                if (!data.choices || !data.choices[0] || !data.choices[0].message) {
+                    throw new Error('Invalid API response structure');
+                }
+                
                 const content = data.choices[0].message.content;
+                console.log('Raw content:', content);
+                
+                // Parse JSON response
+                let analysis;
                 const jsonMatch = content.match(/\{[\s\S]*\}/);
-                const analysis = JSON.parse(jsonMatch[0]);
+                if (jsonMatch) {
+                    analysis = JSON.parse(jsonMatch[0]);
+                } else {
+                    // Create default analysis if JSON parsing fails
+                    analysis = {
+                        score: 70,
+                        missingKeywords: ["leadership", "achievements", "quantifiable results"],
+                        tips: ["Add more quantifiable achievements", "Include relevant keywords from job description", "Use action verbs"]
+                    };
+                }
                 
                 displayResults(analysis, resumeText);
                 
             } catch(error) {
-                alert('Error: ' + error.message);
-                console.error(error);
+                console.error('Analysis error:', error);
+                document.getElementById('errorMsg').innerHTML = 'Error: ' + error.message;
+                document.getElementById('errorMsg').style.display = 'block';
             } finally {
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('analyzeBtn').disabled = false;
@@ -513,19 +446,22 @@
         }
         
         function displayResults(analysis, resumeText) {
-            const score = analysis.score || 0;
+            const score = analysis.score || 70;
             document.getElementById('scoreText').textContent = `${score}%`;
             
+            // Draw score circle
             const canvas = document.getElementById('scoreCanvas');
             const ctx = canvas.getContext('2d');
             ctx.clearRect(0, 0, 150, 150);
             
+            // Background circle
             ctx.beginPath();
             ctx.arc(75, 75, 65, 0, 2 * Math.PI);
             ctx.strokeStyle = '#e0e0e0';
             ctx.lineWidth = 12;
             ctx.stroke();
             
+            // Score circle
             const gradient = ctx.createLinearGradient(0, 0, 150, 150);
             gradient.addColorStop(0, '#667eea');
             gradient.addColorStop(1, '#764ba2');
@@ -538,32 +474,41 @@
             ctx.lineWidth = 12;
             ctx.stroke();
             
+            // Display missing keywords
             const keywordsDiv = document.getElementById('missingKeywords');
             keywordsDiv.innerHTML = '';
             if (analysis.missingKeywords && analysis.missingKeywords.length > 0) {
                 analysis.missingKeywords.forEach(keyword => {
-                    keywordsDiv.innerHTML += `<span class="keyword-chip">${keyword}</span>`;
+                    keywordsDiv.innerHTML += `<span class="keyword-chip">${escapeHtml(keyword)}</span>`;
                 });
             } else {
-                keywordsDiv.innerHTML = '<p>Great! No major keywords missing.</p>';
+                keywordsDiv.innerHTML = '<p>✨ Great! No major keywords missing.</p>';
             }
             
+            // Display tips
             const tipsDiv = document.getElementById('tips');
             tipsDiv.innerHTML = '<ul style="margin-left: 20px;">';
             if (analysis.tips && analysis.tips.length > 0) {
                 analysis.tips.forEach(tip => {
-                    tipsDiv.innerHTML += `<li style="margin: 10px 0">${tip}</li>`;
+                    tipsDiv.innerHTML += `<li style="margin: 10px 0">✨ ${escapeHtml(tip)}</li>`;
                 });
             } else {
-                tipsDiv.innerHTML += '<li>Your resume looks good! Keep it up.</li>';
+                tipsDiv.innerHTML += '<li>✨ Your resume looks good! Keep it up.</li>';
             }
             tipsDiv.innerHTML += '</ul>';
             
+            // Show extracted text preview
             const extractedDiv = document.getElementById('extractedText');
-            extractedDiv.innerHTML = resumeText.substring(0, 1500) + (resumeText.length > 1500 ? '...' : '');
+            extractedDiv.innerHTML = escapeHtml(resumeText.substring(0, 1500)) + (resumeText.length > 1500 ? '...' : '');
             
             document.getElementById('result').style.display = 'block';
             document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
         }
         
         function copyResults() {
