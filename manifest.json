@@ -1,0 +1,110 @@
+{
+  "name": "AI Resume Coach",
+  "short_name": "Resume Coach",
+  "description": "ATS resume checker with AI feedback. Practice mock interviews with real-time evaluation. Get your resume scored and optimized for job applications.",
+  "start_url": "/Resume-coach/",
+  "scope": "/Resume-coach/",
+  "display": "standalone",
+  "theme_color": "#667eea",
+  "background_color": "#0f0c29",
+  "orientation": "portrait",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["education", "productivity", "business"],
+  "icons": [
+    {
+      "src": "icons/icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshots/home.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "AI Resume Coach Home Page"
+    },
+    {
+      "src": "screenshots/resume-checker.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "ATS Resume Checker"
+    },
+    {
+      "src": "screenshots/interview.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Mock Interview Practice"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Resume Checker",
+      "short_name": "Check Resume",
+      "description": "Check your resume ATS score",
+      "url": "/Resume-coach/resume-checker.html",
+      "icons": [{ "src": "icons/icon-96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Mock Interview",
+      "short_name": "Interview",
+      "description": "Practice interview questions",
+      "url": "/Resume-coach/interview.html",
+      "icons": [{ "src": "icons/icon-96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Live Interview",
+      "short_name": "Live",
+      "description": "Voice-based interview",
+      "url": "/Resume-coach/live-interview.html",
+      "icons": [{ "src": "icons/icon-96.png", "sizes": "96x96" }]
+    }
+  ]
+}
