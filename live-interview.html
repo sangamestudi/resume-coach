@@ -237,6 +237,9 @@
     </div>
     
     <script>
+        // 🔑 DEEPSEEK API KEY - FIXED HARDCODED
+        const DEEPSEEK_API_KEY = 'sk-43cb731b2b8348b8917d32e636a846c0';
+        
         const questions = {
             IT: [
                 "Tell me about yourself and your technical background.",
@@ -273,19 +276,7 @@
         let currentIndustry = 'IT';
         let currentQuestion = '';
         let mediaRecorder;
-        let audioChunks = [];
         let isRecording = false;
-        let apiKey = ''; // User will need to enter their API key
-        
-        // Ask for API key on load
-        window.onload = () => {
-            apiKey = prompt('Enter your DeepSeek API key to start:', '');
-            if (!apiKey) {
-                alert('API key required! Get free from platform.deepseek.com');
-            } else {
-                getNextQuestion();
-            }
-        };
         
         function selectIndustry(industry) {
             currentIndustry = industry;
@@ -315,7 +306,7 @@
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
                 mediaRecorder = new MediaRecorder(stream);
-                audioChunks = [];
+                let audioChunks = [];
                 
                 mediaRecorder.ondataavailable = event => {
                     audioChunks.push(event.data);
@@ -347,11 +338,8 @@
         }
         
         async function transcribeAudio(audioBlob) {
-            // Note: For production, use a proper speech-to-text API
-            // This is a simplified version using Web Speech API
             document.getElementById('answerText').innerHTML = 'Transcribing your answer...';
             
-            // Use Web Speech API for demo (works in Chrome)
             const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
             recognition.lang = 'en-US';
             recognition.start();
@@ -383,13 +371,13 @@
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${apiKey}`
+                        'Authorization': `Bearer ${DEEPSEEK_API_KEY}`
                     },
                     body: JSON.stringify({
                         model: 'deepseek-chat',
                         messages: [{
                             role: 'system',
-                            content: `You are an interviewer for ${currentIndustry} role. Give feedback on the answer. Include: Good points, Improvements needed, Sample answer (2-3 lines). Keep encouraging.`
+                            content: `You are an interviewer for ${currentIndustry} role. Give feedback. Include: Good points, Improvements needed, Sample answer. Keep encouraging.`
                         }, {
                             role: 'user',
                             content: `Question: ${currentQuestion}\n\nAnswer: ${userAnswer}`
@@ -402,9 +390,12 @@
                 document.getElementById('feedbackText').innerHTML = feedback.replace(/\n/g, '<br>');
                 
             } catch(error) {
-                document.getElementById('feedbackText').innerHTML = 'Error getting feedback. Please check your API key.';
+                document.getElementById('feedbackText').innerHTML = 'Error getting feedback. Please try again.';
             }
         }
+        
+        // Load first question
+        getNextQuestion();
     </script>
 </body>
 </html>
